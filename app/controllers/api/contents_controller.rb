@@ -10,7 +10,7 @@ class ContentsController < ApplicationController
     #   format.json { render }
     #   format.xml { render xml: @contents }
     # end
-    render json: @contents
+    render json: @contents.to_json(:include => [:photos, :user_info])
   end
 
   # GET /contents/1
@@ -34,9 +34,9 @@ class ContentsController < ApplicationController
   def create
     photo_list = content_params.delete(:photos)
     user_info = content_params.delete(:user_info)
-    @content = Content.new(content_params.except(:photos))
+    @content = Content.create(content_params.except(:photos, :user_info))
     if user_info
-      @content.user_info.create(user_info)
+      @content.create_user_info(user_info)
     end
     if photo_list.each do |photo|
          @content.photos.create(photo)

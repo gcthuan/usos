@@ -11,38 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716031712) do
+ActiveRecord::Schema.define(version: 20140718102506) do
 
-  create_table "images", force: true do |t|
-    t.string   "small_image_url"
-    t.string   "medium_image_url"
-    t.string   "normal_image_url"
-    t.integer  "message_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "messages", force: true do |t|
+  create_table "contents", force: true do |t|
     t.string   "audio_url"
-    t.time     "audio_length"
-    t.float    "longtitude"
+    t.float    "longitude"
     t.float    "latitude"
-    t.integer  "user_id"
-    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "fullname"
-    t.string   "device_imei"
-    t.string   "device_id"
-    t.string   "phone"
-    t.float    "longtitude"
+  create_table "devices", force: true do |t|
+    t.string   "device_token"
     t.float    "latitude"
+    t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "distance"
+  end
+
+  create_table "photos", force: true do |t|
+    t.string   "photo_url"
+    t.float    "timeline"
+    t.integer  "content_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_infos", force: true do |t|
+    t.string   "name"
+    t.string   "phone_number"
+    t.integer  "content_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

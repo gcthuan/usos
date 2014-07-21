@@ -1,15 +1,15 @@
 ZsosApi::Application.routes.draw do
 
-  root 'api/users#index'
+  root 'api/devices#index'
   
   match 'api/messages/find_nearby_devices', to: 'api/messages#find_nearby_devices', via: 'get'
   match 'api/messages/find_all_devices', to: 'api/messages#find_all_devices', via: 'get'
   match 'api/messages/find_one_device', to: 'api/messages#find_one_device', via: 'get'
 
   namespace :api, {default: 'json'} do
-    resources :users
-    resources :messages
-    resources :images
+    resources :devices
+    resources :contents
+    resources :photos
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

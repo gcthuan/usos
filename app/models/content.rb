@@ -3,4 +3,5 @@ class Content < ActiveRecord::Base
   has_one :user_info, :dependent => :destroy, :autosave => :true
   accepts_nested_attributes_for :photos
   accepts_nested_attributes_for :user_info
+  
 end

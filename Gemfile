@@ -6,6 +6,7 @@ gem 'rails', '4.0.8'
 gem 'rails-api'
 gem 'pushmeup'
 gem 'geocoder'
+gem 'delayed_job_active_record'
 
 group :development, :test do
   gem 'spork-rails', '4.0.0'

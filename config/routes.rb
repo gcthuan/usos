@@ -2,6 +2,8 @@ ZsosApi::Application.routes.draw do
 
   root 'api/contents#index'
 
+  match '/api/contents/rebroadcast', to: 'api/contents#rebroadcast', via: 'get'
+
   namespace :api, {default: 'json'} do
     resources :devices
     resources :contents

@@ -48,6 +48,12 @@ class ContentsController < ApplicationController
       render json: @content.errors, status: :unprocessable_entity
     end
 
+    @content.broadcast
+  end
+
+  def rebroadcast
+    @content = Content.find(params[:id])
+    @content.broadcast
   end
 
   # PATCH/PUT /contents/1

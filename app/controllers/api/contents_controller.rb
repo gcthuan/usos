@@ -54,6 +54,7 @@ class ContentsController < ApplicationController
   def rebroadcast
     @content = Content.find(params[:id])
     @content.broadcast
+    render json: @content.to_json(:include => [:photos, :user_info]), status: :created
   end
 
   # PATCH/PUT /contents/1

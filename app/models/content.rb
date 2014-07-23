@@ -12,12 +12,12 @@ class Content < ActiveRecord::Base
   end
 
   def broadcast
-  	delay(run_at: 0.minute.from_now).find_nearby_devices self.latitude, self.longitude, 1
-  	delay(run_at: 1.minute.from_now).find_nearby_devices self.latitude, self.longitude, 2
-  	delay(run_at: 2.minute.from_now).find_nearby_devices self.latitude, self.longitude, 3
-  	delay(run_at: 3.minute.from_now).find_nearby_devices self.latitude, self.longitude, 5
-  	delay(run_at: 4.minute.from_now).find_nearby_devices self.latitude, self.longitude, 8
-  	delay(run_at: 5.minute.from_now).find_nearby_devices self.latitude, self.longitude, 13
+  	delay(run_at: 0.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 1
+  	delay(run_at: 1.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 2
+  	delay(run_at: 2.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 3
+  	delay(run_at: 3.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 5
+  	delay(run_at: 4.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 8
+  	delay(run_at: 5.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 13
   end
 
 end

@@ -3,6 +3,7 @@ ZsosApi::Application.routes.draw do
   root 'api/contents#index'
 
   match '/api/contents/rebroadcast', to: 'api/contents#rebroadcast', via: 'get'
+  match '/api/contents/nearby', to: 'api/contents#find_nearby', via: 'get'
 
   namespace :api, {default: 'json'} do
     resources :devices

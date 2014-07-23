@@ -61,6 +61,13 @@ class ContentsController < ApplicationController
     end
   end
 
+  def find_nearby
+    latitude = params[:latitude]
+    longitude = params[:longitude]
+    @content = Content.near([latitude, longitude], 10, units: :km).order("distance")
+    render json: @content.to_json(:include => [:photos, :user_info])
+  end
+
   # PATCH/PUT /contents/1
   # PATCH/PUT /contents/1.json
   def update

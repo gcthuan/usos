@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722033745) do
+ActiveRecord::Schema.define(version: 20140723064614) do
 
   create_table "contents", force: true do |t|
     t.string   "audio_url"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20140722033745) do
     t.float    "latitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "device_id"
   end
 
   create_table "delayed_jobs", force: true do |t|

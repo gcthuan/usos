@@ -34,7 +34,8 @@ class ContentsController < ApplicationController
   def create
     photo_list = content_params.delete(:photos)
     user_info = content_params.delete(:user_info)
-    @content = Content.create(content_params.except(:photos, :user_info))
+    @device = Device.find_by_device_token(content_params[:device_token])
+    @content = @device.contents.create(content_params.except(:photos, :user_info, :device_token))
     if user_info
       @content.create_user_info(user_info)
     end
@@ -53,8 +54,12 @@ class ContentsController < ApplicationController
 
   def rebroadcast
     @content = Content.find(params[:id])
-    @content.broadcast
-    render json: @content.to_json(:include => [:photos, :user_info]), status: :created
+    if @content.valid?
+      @content.broadcast
+      render json: "Successful" , status: 200
+    else
+      render json: @content.errors
+    end
   end
 
   # PATCH/PUT /contents/1
@@ -79,7 +84,7 @@ class ContentsController < ApplicationController
   end
 
   def content_params
-    params.require(:content).permit(:audio_url, :longitude, :latitude, :photos => [:photo_url, :timeline], :user_info => [:name, :phone_number])
+    params.require(:content).permit(:device_token, :audio_url, :longitude, :latitude, :photos => [:photo_url, :timeline], :user_info => [:name, :phone_number])
   end
 end
 

@@ -1,14 +1,18 @@
 class Content < ActiveRecord::Base
   has_many :photos, :dependent => :destroy, :autosave => :true
   has_one :user_info, :dependent => :destroy, :autosave => :true
+  belongs_to :device
   accepts_nested_attributes_for :photos
   accepts_nested_attributes_for :user_info
 
   def find_nearby_devices latitude, longitude, radius
-  	device_list = Device.near([latitude, longitude], radius, units: :km)
+  	device_list = Device.near([latitude, longitude], radius, units: :km, order: :distance)
+
   	puts "#{device_list.count} devices found"
   	
   	puts "---------------------------------------------------"
+
+    #APNS.send_notification(device_list, alert: 'Hello iPhone!', badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
   end
 
   def broadcast

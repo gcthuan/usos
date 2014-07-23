@@ -21,6 +21,7 @@ class Content < ActiveRecord::Base
   	delay(run_at: 3.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 5
   	delay(run_at: 4.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 8
   	delay(run_at: 5.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 13
+    self.delay(run_at: 6.minute.from_now.utc).destroy
   end
 
 end

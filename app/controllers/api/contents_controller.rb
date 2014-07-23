@@ -34,8 +34,7 @@ class ContentsController < ApplicationController
   def create
     photo_list = content_params.delete(:photos)
     user_info = content_params.delete(:user_info)
-    @device = Device.find_by_device_token(content_params[:device_token])
-    @content = @device.contents.create(content_params.except(:photos, :user_info, :device_token))
+    @content = Content.create(content_params.except(:photos, :user_info))
     if user_info
       @content.create_user_info(user_info)
     end

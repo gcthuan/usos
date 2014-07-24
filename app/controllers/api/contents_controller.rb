@@ -65,7 +65,7 @@ class ContentsController < ApplicationController
     latitude = params[:latitude]
     longitude = params[:longitude]
     @content = Content.near([latitude, longitude], 10, units: :km).order("distance")
-    render json: @content.to_json(:include => [:photos, :user_info])
+    paginate json: @content.includes(:photos, :user_info), per_page: 10
   end
 
   # PATCH/PUT /contents/1

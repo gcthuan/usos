@@ -8,6 +8,8 @@ gem 'pushmeup'
 gem 'geocoder'
 gem 'delayed_job_active_record'
 gem 'database_cleaner'
+gem 'will_paginate'
+gem 'api-pagination'
 
 group :development, :test do
   gem 'spork-rails', '4.0.0'

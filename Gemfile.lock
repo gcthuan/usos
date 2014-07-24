@@ -28,6 +28,9 @@ GEM
     api-pagination (3.0.2)
     arel (4.0.2)
     builder (3.1.4)
+    bullet (4.13.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (>= 1.6.0)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     childprocess (0.5.3)
@@ -156,6 +159,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.40)
+    uniform_notifier (1.6.2)
     will_paginate (3.0.7)
 
 PLATFORMS
@@ -163,6 +167,7 @@ PLATFORMS
 
 DEPENDENCIES
   api-pagination
+  bullet
   database_cleaner
   delayed_job_active_record
   factory_girl_rails (= 4.2.1)

@@ -11,6 +11,8 @@ gem 'database_cleaner'
 gem 'will_paginate'
 gem 'api-pagination'
 
+gem 'bullet', group: :development
+
 group :development, :test do
   gem 'spork-rails', '4.0.0'
   gem 'guard-spork', '1.5.0'

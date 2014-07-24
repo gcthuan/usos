@@ -1,7 +1,7 @@
 class Content < ActiveRecord::Base
   reverse_geocoded_by :latitude, :longitude
-  has_many :photos, :dependent => :destroy, :autosave => :true
-  has_one :user_info, :dependent => :destroy, :autosave => :true
+  has_many :photos, :dependent => :destroy, :autosave => :true, foreign_key: :photo_id
+  has_one :user_info, :dependent => :destroy, :autosave => :true, foreign_key: :user_info_id
   accepts_nested_attributes_for :photos
   accepts_nested_attributes_for :user_info
 

@@ -64,14 +64,21 @@ class ContentsController < ApplicationController
   def find_nearby
     latitude = params[:latitude]
     longitude = params[:longitude]
-    @content = Content.near([latitude, longitude], 10, units: :km).order("distance")
-    paginate json: @content, per_page: 10
+    if params[:page].nil?
+      page = 1
+    else
+      page = params[:page]
+    end
+    @contents = Content.near([latitude, longitude], 10, units: :km).order("distance")
+    first = page.to_i * 10
+    last = first + 9
+    render json: @contents[first..last].to_json(:include => [:photos, :user_info])
   end
 
   def push
     device_token = params[:device_token]
     if @content = Content.find_by_device_token(device_token)
-      APNS.send_notification(device_token, alert: "#{@content.user_info.name} needs your help!", badge: 0, sound: 'default')
+      APNS.send_notification(device_token, alert: "#{@content.user_info.name} needs your help!", sound: 'default')
     else
       render json: "Token not found", status: 404
     end

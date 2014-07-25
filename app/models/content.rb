@@ -21,7 +21,7 @@ class Content < ActiveRecord::Base
   	delay(run_at: 2.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 3, self.device_token
   	delay(run_at: 3.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 5, self.device_token
   	delay(run_at: 4.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 8, self.device_token
-    self.delay(run_at: 10.minute.from_now.utc).destroy
+    self.delay(run_at: 10.minute.from_now.utc).update_attribute :status, "expired"
   end
 
 end

@@ -57,7 +57,7 @@ class ContentsController < ApplicationController
       @content.broadcast
       render json: "Successful" , status: 200
     else
-      render json: @content.errors
+      render json: @content.errors, status: 404
     end
   end
 
@@ -74,7 +74,7 @@ class ContentsController < ApplicationController
     last = first + 9
     puts first
     puts last
-    @nearby_contents = @contents[first..last]
+    @nearby_contents = @contents[first..last].select { |content| content.status == 'avaiable'}
     if @nearby_contents.nil?
       render json: "No content found", status: 204
     else
@@ -96,11 +96,13 @@ class ContentsController < ApplicationController
   def update
     @content = Content.find(params[:id])
 
-    if @content.update_attributes(content_params)
-      head :no_content
-    else
-      render json: @content.errors, status: :unprocessable_entity
-    end
+    @content.update_attribute :status, "unavailable"
+
+    #if @content.update_attributes(content_params)
+    #  head :no_content
+    #else
+    #  render json: @content.errors, status: :unprocessable_entity
+    #end
   end
 
   # DELETE /contents/1

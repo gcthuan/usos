@@ -10,7 +10,7 @@ gem 'delayed_job_active_record'
 gem 'database_cleaner'
 gem 'will_paginate'
 gem 'api-pagination'
-
+gem 'hirefire'
 gem 'bullet', group: :development
 
 group :development, :test do

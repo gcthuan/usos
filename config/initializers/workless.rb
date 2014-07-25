@@ -1,0 +1,1 @@
+Delayed::Job.scaler = :heroku_cedar

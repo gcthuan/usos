@@ -74,7 +74,7 @@ class ContentsController < ApplicationController
     last = first + 9
     puts first
     puts last
-    @nearby_contents = @contents[first..last].select { |content| content.status == 'avaiable'}
+    @nearby_contents = @contents[first..last].select { |content| content.status == 'available'}
     if @nearby_contents.nil?
       render json: "No content found", status: 204
     else

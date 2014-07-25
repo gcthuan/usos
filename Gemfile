@@ -7,11 +7,10 @@ gem 'rails-api'
 gem 'pushmeup'
 gem 'geocoder'
 gem 'delayed_job_active_record'
-gem "workless", "~> 1.2.3"
-gem 'daemons'
 gem 'database_cleaner'
 gem 'will_paginate'
 gem 'api-pagination'
+gem "hirefire-resource"
 gem 'bullet', group: :development
 
 group :development, :test do

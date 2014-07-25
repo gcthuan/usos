@@ -69,10 +69,10 @@ class ContentsController < ApplicationController
     else
       page = params[:page]
     end
-    @contents = Content.near([latitude, longitude], 10, units: :km).order("created_at")
+    @contents = Content.near([latitude, longitude], 10, units: :km)
     first = page.to_i * 10
     last = first + 9
-    @nearby_contents = @contents[first..last]
+    @nearby_contents = @contents[first..last].order("created_at DESC")
     if @nearby_contents.nil?
       render json: "No content found", status: 204
     else

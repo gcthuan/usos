@@ -4,15 +4,26 @@ class Content < ActiveRecord::Base
   has_one :user_info, :dependent => :destroy, :autosave => :true
   accepts_nested_attributes_for :photos
   accepts_nested_attributes_for :user_info
+  attr_accessor :previous_list
 
   def find_nearby_devices latitude, longitude, radius, device_token
-  	device_list = Device.near([latitude, longitude], radius, units: :km, order: :distance)
-
-  	puts "#{device_list.count} devices found"
-  	
+  	device_list = Device.near([latitude, longitude], radius, units: :km)
+    token_list = Array.new
+    device_list.each do |device|
+      token_list << device.device_token
+    end
+  	puts "#{token_list.count} devices found"
+  	puts "#{token_list}"
   	puts "---------------------------------------------------"
-
-    #APNS.send_notification(device_list.exclude(device_token), alert: 'Hello iPhone!', badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
+    if previous_list.nil?
+      token_list = token_list - [device_token]
+    else
+      token_list = token_list - previous_list - [device_token]
+    end
+    previous_list = device_list
+    token_list.each do |token|
+      APNS.send_notification(token, alert: 'Hello iPhone!', badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
+    end
   end
 
   def broadcast
@@ -21,7 +32,9 @@ class Content < ActiveRecord::Base
   	delay(run_at: 2.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 3, self.device_token
   	delay(run_at: 3.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 5, self.device_token
   	delay(run_at: 4.minute.from_now.utc).find_nearby_devices self.latitude, self.longitude, 8, self.device_token
-    self.delay(run_at: 10.minute.from_now.utc).update_attribute :status, "expired"
+    if self.status == 'available'
+      self.delay(run_at: 10.minutes.from_now.utc).update_attribute :status, "expired"
+    end
   end
 
 end

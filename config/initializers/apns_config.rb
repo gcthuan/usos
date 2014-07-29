@@ -1,4 +1,8 @@
-APNS.host = 'gateway.push.apple.com' 
+if Rails.env.production?
+  APNS.host = 'gateway.push.apple.com'
+else
+  APNS.host = 'gateway.sandbox.push.apple.com'
+end
 # gateway.sandbox.push.apple.com is default and only for development
 # gateway.push.apple.com is only for production
 

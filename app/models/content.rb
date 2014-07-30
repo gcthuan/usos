@@ -7,7 +7,7 @@ class Content < ActiveRecord::Base
   serialize :ignored_list, Array
 
   def find_nearby_devices content, radius
-    puts content.ignored_list
+    puts "#{content.ignored_list}"
   	device_list = Device.near([content.latitude, content.longitude], radius, units: :km)
     token_list = Array.new
     device_list.each do |device|
@@ -24,7 +24,7 @@ class Content < ActiveRecord::Base
     #end
     token_list.each do |token|
       puts token
-      #APNS.send_notification(token.to_s, alert: "#{username} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
+      #APNS.send_notification(token.to_s, alert: "#{content.user_info.name} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
     end
     content.update_attribute :ignored_list, token_list
   end

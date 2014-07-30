@@ -52,7 +52,7 @@ class DevicesController < ApplicationController
   end
 
   def device_params
-  	params.require(:device).permit(:device_token, :latitude, :longitude)
+  	params.require(:device).permit(:uid, :device_token, :latitude, :longitude)
   end
 end
 

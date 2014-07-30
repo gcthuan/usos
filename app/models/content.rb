@@ -26,7 +26,7 @@ class Content < ActiveRecord::Base
       puts token
       #APNS.send_notification(token.to_s, alert: "#{username} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
     end
-    content.update_attribute :ignored_list token_list
+    content.update_attribute :ignored_list, token_list
   end
 
   def broadcast

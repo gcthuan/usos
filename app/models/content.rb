@@ -13,6 +13,7 @@ class Content < ActiveRecord::Base
     device_list.each do |device|
       token_list << device.device_token
     end
+    ignored_list = token_list
   	puts "#{token_list.count} devices found"
   	puts "#{token_list}"
   	puts "---------------------------------------------------"
@@ -26,7 +27,7 @@ class Content < ActiveRecord::Base
       puts token
       #APNS.send_notification(token.to_s, alert: "#{content.user_info.name} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
     end
-    content.update_attribute :ignored_list, device_list
+    content.update_attribute :ignored_list, ignored_list
   end
 
   def broadcast

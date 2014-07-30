@@ -15,6 +15,7 @@ class Content < ActiveRecord::Base
   	puts "#{token_list.count} devices found"
   	puts "#{token_list}"
   	puts "---------------------------------------------------"
+    puts previous_list
     if previous_list.nil?
       token_list = token_list - [device_token]
     else
@@ -23,7 +24,7 @@ class Content < ActiveRecord::Base
     previous_list = device_list
     token_list.each do |token|
       puts token
-      APNS.send_notification(token.to_s, alert: "#{username} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
+      #APNS.send_notification(token.to_s, alert: "#{username} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
     end
   end
 

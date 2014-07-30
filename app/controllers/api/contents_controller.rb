@@ -69,7 +69,7 @@ class ContentsController < ApplicationController
     else
       page = params[:page]
     end
-    @contents = Content.order("created_at DESC").near([latitude, longitude], 50000, units: :km)
+    @contents = Content.near([latitude, longitude], 50000, units: :km)
     first = (page.to_i - 1) * 10
     last = first + 9
     @nearby_contents = @contents[first..last]

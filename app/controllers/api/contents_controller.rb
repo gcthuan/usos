@@ -69,14 +69,14 @@ class ContentsController < ApplicationController
     else
       page = params[:page]
     end
-    @contents = Content.order("created_at DESC").near([latitude, longitude], 5, units: :km)
+    @contents = Content.order("created_at DESC").near([latitude, longitude], 50000, units: :km)
     first = (page.to_i - 1) * 10
     last = first + 9
-    @nearby_contents = @contents[first..last].select { |content| content.status == 'available'}
+    @nearby_contents = @contents[first..last]
     if @nearby_contents.nil?
       render json: "No content found", status: 204
     else
-      render json: @nearby_contents.to_json(:include => [:photos, :user_info]), status: 200
+      render json: @nearby_contents.select { |content| content.status == 'available' }.to_json(:include => [:photos, :user_info]), status: 200
     end
   end
 

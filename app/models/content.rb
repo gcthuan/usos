@@ -7,6 +7,7 @@ class Content < ActiveRecord::Base
   attr_accessor :previous_list
 
   def find_nearby_devices latitude, longitude, radius, device_token, username
+    puts previous_list
   	device_list = Device.near([latitude, longitude], radius, units: :km)
     token_list = Array.new
     device_list.each do |device|
@@ -15,13 +16,15 @@ class Content < ActiveRecord::Base
   	puts "#{token_list.count} devices found"
   	puts "#{token_list}"
   	puts "---------------------------------------------------"
-    puts previous_list
+
     if previous_list.nil?
       token_list = token_list - [device_token]
     else
       token_list = token_list - previous_list - [device_token]
     end
     previous_list = device_list
+    puts previous_list
+    puts "--------------------------------------"
     token_list.each do |token|
       puts token
       #APNS.send_notification(token.to_s, alert: "#{username} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})

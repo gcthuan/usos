@@ -32,15 +32,23 @@ class DevicesController < ApplicationController
   # POST /devices
   # POST /devices.json
   def create
-    @device = Device.new(device_params)
-
-    if @device.save
-      render json: @device, status: :created
+    if @device = Device.find_by_uid(device_params[:uid])
+      @device.update_attributes(device_params)
     else
-      render json: @device.errors, status: :unprocessable_entity
+      puts device_params
+      @device = Device.create(device_params)
     end
+    render json: @device, status: 200
   end
 
+  def reload_token
+    @device = Device.find(params[:uid])
+    if @device.update_attributes(device_params)
+      render json: @device, status: 200
+    else
+
+    end
+  end
 
   # DELETE /devices/1
   # DELETE /devices/1.json

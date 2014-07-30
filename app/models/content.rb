@@ -25,7 +25,7 @@ class Content < ActiveRecord::Base
     #end
     token_list.each do |token|
       puts token
-      #APNS.send_notification(token.to_s, alert: "#{content.user_info.name} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
+      APNS.send_notification(token.to_s, alert: "#{content.user_info.name} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
     end
     content.update_attribute :ignored_list, ignored_list
   end
@@ -37,7 +37,7 @@ class Content < ActiveRecord::Base
   	delay(run_at: 3.minute.from_now.utc).find_nearby_devices self, 5
   	delay(run_at: 4.minute.from_now.utc).find_nearby_devices self, 8
     if self.status == 'available'
-      self.delay(run_at: 60.minutes.from_now.utc).update_attribute :status, "expired"
+      self.delay(run_at: 120.minutes.from_now.utc).update_attribute :status, "expired"
     end
   end
 

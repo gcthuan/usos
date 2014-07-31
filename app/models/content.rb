@@ -21,7 +21,7 @@ class Content < ActiveRecord::Base
     #if ignore_list.nil?
     #  token_list = token_list - [device_token]
     #else
-    token_list = token_list - content.ignored_list - [device_token]
+    token_list = token_list - content.ignored_list - [content.device_token]
     #end
     token_list.each do |token|
       puts token

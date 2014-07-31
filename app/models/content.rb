@@ -7,27 +7,31 @@ class Content < ActiveRecord::Base
   serialize :ignored_list, Array
 
   def find_nearby_devices content, radius
-    puts "#{content.ignored_list}"
+    #puts "#{content.ignored_list}"
+    content.update_attribute :status, "broadcasting"
   	device_list = Device.near([content.latitude, content.longitude], radius, units: :km)
     token_list = Array.new
     device_list.each do |device|
       token_list << device.device_token
     end
     ignored_list = token_list
-  	puts "#{token_list.count} devices found"
-  	puts "#{token_list}"
-  	puts "---------------------------------------------------"
+  	#puts "#{token_list.count} devices found"
+  	#puts "#{token_list}"
+  	#puts "---------------------------------------------------"
 
     #if ignore_list.nil?
     #  token_list = token_list - [device_token]
     #else
-      token_list = token_list - content.ignored_list - [device_token]
+    token_list = token_list - content.ignored_list - [device_token]
     #end
     token_list.each do |token|
       puts token
       APNS.send_notification(token.to_s, alert: "#{content.user_info.name} needs your help!", badge: 1, sound: 'default', :other => {:id => content.id})
     end
     content.update_attribute :ignored_list, ignored_list
+    if radius == 8
+      content.update_attribute :status, "finished"
+    end
   end
 
   def broadcast

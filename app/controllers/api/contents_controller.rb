@@ -53,6 +53,7 @@ class ContentsController < ApplicationController
 
   def rebroadcast
     @content = Content.find(params[:id])
+    @content.update_attribute :ignored_list, []
     if @content.valid?
       @content.broadcast
       render json: "Successful" , status: 200

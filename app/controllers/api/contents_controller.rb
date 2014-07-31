@@ -53,13 +53,12 @@ class ContentsController < ApplicationController
 
   def rebroadcast
     @content = Content.find(params[:id])
-    @content.update_attribute :ignored_list, []
-    if @content.valid?
+    if @content.broadcast_status == false
+      @content.update_attribute :ignored_list, []
       @content.broadcast
-      render json: @content.to_json(:include => [:photos, :user_info]), status: 200
-    else
-      render json: @content.errors, status: 404
+      @content.update_attribute :broadcast_status, true
     end
+    render json: @content.to_json(:include => [:photos, :user_info]), status: 200
   end
 
   def find_nearby

@@ -8,7 +8,6 @@ class Content < ActiveRecord::Base
 
   def find_nearby_devices content, radius
     #puts "#{content.ignored_list}"
-    content.update_attribute :status, "broadcasting"
   	device_list = Device.near([content.latitude, content.longitude], radius, units: :km)
     token_list = Array.new
     device_list.each do |device|
@@ -30,7 +29,7 @@ class Content < ActiveRecord::Base
     end
     content.update_attribute :ignored_list, ignored_list
     if radius == 8
-      content.update_attribute :status, "finished"
+      content.update_attribute :broadcast_status, false
     end
   end
 
@@ -40,6 +39,7 @@ class Content < ActiveRecord::Base
   	delay(run_at: 2.minute.from_now.utc).find_nearby_devices self, 3
   	delay(run_at: 3.minute.from_now.utc).find_nearby_devices self, 5
   	delay(run_at: 4.minute.from_now.utc).find_nearby_devices self, 8
+    self.update_attribute :broadcast_status, true
     if self.status == 'available'
       self.delay(run_at: 120.minutes.from_now.utc).update_attribute :status, "expired"
     end

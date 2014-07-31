@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140730101722) do
+ActiveRecord::Schema.define(version: 20140731071852) do
 
   create_table "contents", force: true do |t|
     t.string   "audio_url"
@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(version: 20140730101722) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "device_token"
-    t.string   "status",       default: "available"
+    t.string   "status"
     t.text     "ignored_list"
+    t.boolean  "rebroadcast_status", default: false
   end
 
   create_table "delayed_jobs", force: true do |t|

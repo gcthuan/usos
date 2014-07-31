@@ -25,7 +25,7 @@ class Content < ActiveRecord::Base
     #end
     token_list.each do |token|
       puts token
-      APNS.send_notification(token.to_s, alert: "#{content.user_info.name} needs your help!", badge: 1, sound: 'default', :other => {:sent => 'with apns gem', :custom_param => "value"})
+      APNS.send_notification(token.to_s, alert: "#{content.user_info.name} needs your help!", badge: 1, sound: 'default', :other => {:id => content.id})
     end
     content.update_attribute :ignored_list, ignored_list
   end

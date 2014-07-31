@@ -23,9 +23,10 @@ class Content < ActiveRecord::Base
     #else
     token_list = token_list - content.ignored_list - [content.device_token]
     #end
-    token_list.each do |token|
-      puts token
-      APNS.send_notification(token.to_s, alert: "#{content.user_info.name} needs your help!", badge: 1, sound: 'default', :other => {:id => content.id})
+    if content.status == 'available'
+      token_list.each do |token|
+        APNS.send_notification(token.to_s, alert: "#{content.user_info.name} needs your help!", badge: 1, sound: 'default', :other => {:id => content.id})
+      end
     end
     content.update_attribute :ignored_list, ignored_list
     if radius == 8

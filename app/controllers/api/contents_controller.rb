@@ -56,7 +56,7 @@ class ContentsController < ApplicationController
     @content.update_attribute :ignored_list, []
     if @content.valid?
       @content.broadcast
-      render json: "Successful" , status: 200
+      render json: @content.to_json(:include => [:photos, :user_info]), status: 200
     else
       render json: @content.errors, status: 404
     end

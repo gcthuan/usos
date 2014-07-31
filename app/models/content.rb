@@ -29,7 +29,7 @@ class Content < ActiveRecord::Base
     end
     content.update_attribute :ignored_list, ignored_list
     if radius == 8
-      content.update_attribute :broadcast_status, false
+      content.update_attribute :rebroadcast_status, false
     end
   end
 
@@ -39,7 +39,7 @@ class Content < ActiveRecord::Base
   	delay(run_at: 2.minute.from_now.utc).find_nearby_devices self, 3
   	delay(run_at: 3.minute.from_now.utc).find_nearby_devices self, 5
   	delay(run_at: 4.minute.from_now.utc).find_nearby_devices self, 8
-    self.update_attribute :broadcast_status, true
+    self.update_attribute :rebroadcast_status, true
     if self.status == 'available'
       self.delay(run_at: 120.minutes.from_now.utc).update_attribute :status, "expired"
     end

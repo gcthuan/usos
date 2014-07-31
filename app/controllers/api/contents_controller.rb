@@ -53,10 +53,10 @@ class ContentsController < ApplicationController
 
   def rebroadcast
     @content = Content.find(params[:id])
-    if @content.broadcast_status == false
+    if @content.rebroadcast_status == false
       @content.update_attribute :ignored_list, []
       @content.broadcast
-      @content.update_attribute :broadcast_status, true
+      @content.update_attribute :rebroadcast_status, true
     end
     render json: @content.to_json(:include => [:photos, :user_info]), status: 200
   end

@@ -10,7 +10,7 @@ class ContentsController < ApplicationController
     #   format.json { render }
     #   format.xml { render xml: @contents }
     # end
-    render json: @contents.to_json(:include => [:photos, :user_info])
+    render json: @contents.to_json(:include => [:photos, :user_info], :except => [:ignored_list])
   end
 
   # GET /contents/1
@@ -18,7 +18,7 @@ class ContentsController < ApplicationController
   def show
     @content = Content.find(params[:id])
 
-    render json: @content.to_json(:include => [:photos, :user_info])
+    render json: @content.to_json(:include => [:photos, :user_info], :except => [:ignored_list])
   end
 
   # GET /contents/new
@@ -45,7 +45,7 @@ class ContentsController < ApplicationController
       end
     end
     if @content.save
-      render json: @content.to_json(:include => [:photos, :user_info]), status: :created
+      render json: @content.to_json(:include => [:photos, :user_info], :except => [:ignored_list]), status: :created
     else
       render json: @content.errors, status: :unprocessable_entity
     end
@@ -60,7 +60,7 @@ class ContentsController < ApplicationController
       @content.broadcast
       @content.update_attribute :rebroadcast_status, true
     end
-    render json: @content.to_json(:include => [:photos, :user_info]), status: 200
+    render json: @content.to_json(:include => [:photos, :user_info], :exclude => [:ignored_list]), status: 200
   end
 
   def find_nearby
@@ -78,7 +78,7 @@ class ContentsController < ApplicationController
     if @nearby_contents.nil?
       render json: "No content found", status: 204
     else
-      render json: @nearby_contents.select { |content| content.status == 'available' }.to_json(:include => [:photos, :user_info]), status: 200
+      render json: @nearby_contents.select { |content| content.status == 'available' }.to_json(:include => [:photos, :user_info], :except => [:ignored_list]), status: 200
     end
   end
 

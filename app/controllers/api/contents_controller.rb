@@ -35,6 +35,8 @@ class ContentsController < ApplicationController
     photo_list = content_params.delete(:photos)
     user_info = content_params.delete(:user_info)
     @content = Content.create(content_params.except(:photos, :user_info))
+    local_time = @content.created_at + 7.hours
+    @content.update_attribute :local_time, local_time
     if user_info
       @content.create_user_info(user_info)
     end

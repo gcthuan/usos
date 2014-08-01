@@ -84,10 +84,11 @@ class ContentsController < ApplicationController
 
   def push
     device_token = params[:device_token]
-    if @content = Content.find_by_device_token(device_token)
-      APNS.send_notification(device_token, alert: "#{@content.user_info.name} needs your help!", sound: 'default')
+    if @content = Content.find(params[:id])
+      APNS.send_notification(device_token, alert: "#{@content.user_info.name} needs your help!", sound: 'default', badge: 1, :other => {:id => @content.id})
+      render json: "OK", status: 200
     else
-      render json: "Token not found", status: 404
+      render json: "Content not found", status: 404
     end
   end
 

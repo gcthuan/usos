@@ -2,41 +2,59 @@
 
 http://pure-citadel-5044.herokuapp.com
 
-//create new content via POST
+create new content via POST
+
 link: /api/contents
-//params: json body contains
+
+params: json body contains
+
 	-audio_url
+	
 	-longitude
+	
 	-latitude
+	
 	-list of photos
+	
 	-user_info
 
-//get a content via GET
+get a content via GET
+
 link: /api/contents/:id
 
-//get all contents via GET
+get all contents via GET
+
 link: /api/contents
 
 --------------------------------------
 
-//get a photo via GET
+get a photo via GET
+
 link: /api/photos/:id
 
-//get all photos via GET
+get all photos via GET
+
 link: /api/photos
 
 ---------------------------------------
 
-//create new device via POST
+create new device via POST
+
 link: /api/devices
-//params: json body contains
+
+params: json body contains
+
 	-device_token
+	
 	-latitude
+	
 	-longitude
 
-//get a device via GET
+get a device via GET
+
 link: /api/devices/:id
 
-//get all devices via GET
+get all devices via GET
+
 link: /api/devices
 

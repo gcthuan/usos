@@ -1,28 +1,42 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+http://pure-citadel-5044.herokuapp.com
 
-Things you may want to cover:
+//create new content via POST
+link: /api/contents
+//params: json body contains
+	-audio_url
+	-longitude
+	-latitude
+	-list of photos
+	-user_info
 
-* Ruby version
+//get a content via GET
+link: /api/contents/:id
 
-* System dependencies
+//get all contents via GET
+link: /api/contents
 
-* Configuration
+--------------------------------------
 
-* Database creation
+//get a photo via GET
+link: /api/photos/:id
 
-* Database initialization
+//get all photos via GET
+link: /api/photos
 
-* How to run the test suite
+---------------------------------------
 
-* Services (job queues, cache servers, search engines, etc.)
+//create new device via POST
+link: /api/devices
+//params: json body contains
+	-device_token
+	-latitude
+	-longitude
 
-* Deployment instructions
+//get a device via GET
+link: /api/devices/:id
 
-* ...
+//get all devices via GET
+link: /api/devices
 
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
